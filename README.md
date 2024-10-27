@@ -17,6 +17,7 @@ Even though SniffHound is designed to log vulnerabilities, it can be coupled wit
 - `pandas`
 - `numpy`
 - `scikit-learn`
+- `tensorflow`
 
 ## Installation
 
