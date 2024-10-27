@@ -1,0 +1,14 @@
+/* Style for each chart */
+.chart {
+    display: flex;
+    flex-direction: column; /* Align title and chart vertically */
+    align-items: center; /* Center the title and chart horizontally */
+    max-width: 400px; /* Optional: set a max width for each chart */
+    margin: 0 auto; /* Center the chart container */
+  }
+  
+  /* Style for pie title */
+  .pie-title {
+    text-align: center; /* Center the title text */
+    margin-bottom: 10px; /* Space below the title */
+  }
