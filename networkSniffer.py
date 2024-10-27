@@ -104,11 +104,6 @@ try:
 
         # Ensure the correct number of features
         features = data.astype(float)
-        print(features.columns)
-
-        # Debugging prints
-        print(f"Number of features in CSV: {features.shape[1]}")
-        print(f"Number of features expected by scaler: {scaler.n_features_in_}")
 
         # Transform the features
         features_scaled = scaler.transform(features)
