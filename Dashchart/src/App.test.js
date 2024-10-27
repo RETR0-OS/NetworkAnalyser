@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders Anomaly Dashboard header', () => {
   render(<App />);
-  const headerElement = screen.getByText(/SniffHound/i);
+  const headerElement = screen.getByText(/Anomaly Dashboard/i);
   expect(headerElement).toBeInTheDocument();
 });

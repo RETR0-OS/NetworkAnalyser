@@ -1,3 +1,4 @@
+node_modules/
 label_mapper.py
 dataCleaner.py
 captureCleaner.py
