@@ -1,16 +1,55 @@
-/* Center the header */
-header {
-  text-align: center; /* Center the header text */
-  margin-bottom: 20px; /* Space below the header */
+/* App.css */
+
+.app-header {
+  background-color: #1f2937; /* Dark background for header */
+  padding: 20px;
+  text-align: center;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Center the chart container */
+.app-header h1 {
+  text-align: left;
+  margin: 0;
+  font-size: 2.5em;
+}
+
+.chart-heading{
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #374151;
+}
+
 .chart-container {
-  display: flex; /* Use flexbox to align items */
-  justify-content: center; /* Center the items horizontally */
-  align-items: flex-start; /* Align items at the start of the container */
-  gap: 40px; /* Add space between charts */
-  flex-wrap: wrap; /* Allow items to wrap if the screen is small */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
+.chart-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 350px;
+  max-width: 500px;
+}
 
+.chart-card h2 {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #374151;
+}
+
+@media (max-width: 768px) {
+  .chart-card {
+    max-width: 100%;
+  }
+}
