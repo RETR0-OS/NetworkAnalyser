@@ -142,6 +142,7 @@ const Dashboard = () => {
   return (
     <div>
       <header className="app-header">
+        <img src="logo.png" alt="SniffHound Logo" className="logo"/>
         <h1>SniffHound</h1>
       </header>
         <h2 className="chart-header">Anomaly Dashboard</h2>
