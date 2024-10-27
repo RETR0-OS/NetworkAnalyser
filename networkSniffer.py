@@ -137,7 +137,7 @@ try:
         os.makedirs("Logs", exist_ok=True)
 
         # Write anomalies to the log file
-        with open("Logs/anomalies.txt", "a") as log:
+        with open("dashchart/public/Logs/anomalies.txt", "a") as log:
             if anomalies:
                 log.writelines(anomalies)
             else:
@@ -152,7 +152,7 @@ try:
         print("Starting packet capture... Press Ctrl+C to stop.")
         sniff(prn=packet_callback, store=0, timeout=60)  # Capture for 60 seconds using default interface
         # Save captured data to CSV
-        captured_data = save_to_csv('captured_network_data.csv')
+        captured_data = save_to_csv('dashchart/public/captured_network_data.csv')
         print("Data saved to captured_network_data.csv")
         log_thread = threading.Thread(target=generate_log, args=(captured_data,))
         log_thread.start()
