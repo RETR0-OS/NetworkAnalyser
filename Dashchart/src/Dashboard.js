@@ -3,85 +3,130 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import './chart.css';
 import { PieChart, Pie, Cell, Legend, Tooltip } from 'recharts';
-import Papa from 'papaparse';
-import axios from 'axios';
 
 const Dashboard = () => {
   const [protocolCounts, setProtocolCounts] = useState([]);
   const [serviceCounts, setServiceCounts] = useState([]);
-
-  // Define the mappings
-  const protocolMapping = { 0: 'tcp', 1: 'udp', 2: 'icmp' };
-  const serviceMapping = {
-    0: 'http',
-    1: 'private',
-    2: 'domain_u',
-    3: 'smtp',
-    4: 'ftp_data',
-    5: 'eco_i',
-    6: 'other',
-    7: 'ecr_i',
-    8: 'telnet',
-    9: 'finger',
-    10: 'ftp',
-    11: 'https',
-  };
+  const [anomalyTypeCounts, setAnomalyTypeCounts] = useState([]);
+  const [attackVectorCounts, setAttackVectorCounts] = useState([]);
 
   useEffect(() => {
-    // Fetch the CSV file from the public directory
-    const fetchData = async () => {
-      const response = await axios.get('/captured_network_data.csv');
-      const parsedData = Papa.parse(response.data, { header: true });
-      const data = parsedData.data;
+    // Use hardcoded data instead of fetching
 
-      // Count the occurrences of each protocol type
-      const protocolCount = data.reduce((acc, row) => {
-        const protocolType = row.protocol_type; // Assuming protocol_type is the column name
-        if (protocolType !== undefined) {
-          const mappedProtocol = protocolMapping[protocolType] || 'unknown'; // Fallback for unmapped protocols
-          acc[mappedProtocol] = (acc[mappedProtocol] || 0) + 1;
-        }
-        return acc;
-      }, {});
+    // **Sample data for protocolCounts**
+    const sampleProtocolCounts = [
+      { name: 'tcp', value: 120 },
+      { name: 'udp', value: 80 },
+      { name: 'icmp', value: 30 },
+    ];
+    setProtocolCounts(sampleProtocolCounts);
 
-      const countsArray = Object.entries(protocolCount).map(([protocol, count]) => ({
-        name: protocol,
+    // **Sample data for serviceCounts**
+    const sampleServiceCounts = [
+      { name: 'http', value: 70 },
+      { name: 'ftp', value: 50 },
+      { name: 'ssh', value: 40 },
+      { name: 'dns', value: 20 },
+    ];
+    setServiceCounts(sampleServiceCounts);
+
+    // **Anomalies data from anomalies.txt**
+    const anomaliesText = `
+All ok
+All ok
+All ok
+All ok
+All ok
+Anomaly detected in request 1: [np.float64(378.73077917099), 2, 6, 10, 155109, 140589, 0, 0, 0, 0, 0, 0, 0, 726, 547, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly type: udpstorm
+Possible attack vector : DoS
+
+Anomaly detected in request 1: [np.float64(437.6359281539917), 2, 6, 10, 157251, 141811, 0, 0, 0, 0, 0, 0, 0, 772, 591, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly type: udpstorm
+Possible attack vector : DoS
+
+All ok
+All ok
+All ok
+All ok
+All ok
+All ok
+All ok
+Anomaly detected in request 1: [np.float64(484.83814907073975), 2, 6, 10, 188208, 173588, 0, 0, 0, 0, 0, 0, 0, 731, 562, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly type: udpstorm
+Possible attack vector : DoS
+
+Anomaly detected in request 1: [np.float64(544.5192821025848), 2, 6, 10, 191215, 175715, 0, 0, 0, 0, 0, 0, 0, 775, 605, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly type: udpstorm
+Possible attack vector : DoS
+`;
+
+    // **Process anomalies data**
+    const anomalyLines = anomaliesText.split('\n');
+    let anomalyTypeCount = {};
+    let attackVectorCount = {};
+    let totalAnomalies = 0;
+    let totalOk = 0;
+
+    for (let i = 0; i < anomalyLines.length; i++) {
+      const line = anomalyLines[i].trim();
+
+      if (line === 'All ok') {
+        totalOk++;
+      }
+
+      if (line.startsWith('Anomaly type:')) {
+        const anomalyType = line.split(':')[1].trim();
+        anomalyTypeCount[anomalyType] = (anomalyTypeCount[anomalyType] || 0) + 1;
+        totalAnomalies++;
+      }
+
+      if (line.startsWith('Possible attack vector')) {
+        const attackVector = line.split(':')[1].trim();
+        attackVectorCount[attackVector] = (attackVectorCount[attackVector] || 0) + 1;
+      }
+    }
+
+    // **Convert counts to arrays for recharts**
+    const anomalyTypeCountsArray = Object.entries(anomalyTypeCount).map(([type, count]) => ({
+      name: type,
+      value: count,
+    }));
+
+    const attackVectorCountsArray = Object.entries(attackVectorCount).map(
+      ([vector, count]) => ({
+        name: vector,
         value: count,
-      }));
+      })
+    );
 
-      setProtocolCounts(countsArray);
-
-      // Count the occurrences of each service type
-      const serviceCount = data.reduce((acc, row) => {
-        const serviceType = row.service; // Assuming service is the column name
-        if (serviceType !== undefined) {
-          const mappedService = serviceMapping[serviceType] || 'unknown'; // Fallback for unmapped services
-          acc[mappedService] = (acc[mappedService] || 0) + 1;
-        }
-        return acc;
-      }, {});
-
-      const serviceCountsArray = Object.entries(serviceCount).map(([service, count]) => ({
-        name: service,
-        value: count,
-      }));
-
-      setServiceCounts(serviceCountsArray);
-    };
-
-    fetchData();
+    // **Set state with processed data**
+    setAnomalyTypeCounts(anomalyTypeCountsArray);
+    setAttackVectorCounts(attackVectorCountsArray);
   }, []);
 
-  // Define colors for the charts
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AA0DFE', '#F806FF', '#800000'];
+  // **Define colors for the charts**
+  const COLORS = [
+    '#0088FE',
+    '#00C49F',
+    '#FFBB28',
+    '#FF8042',
+    '#AA0DFE',
+    '#F806FF',
+    '#800000',
+    '#B0FF92',
+    '#FF9280',
+    '#FAC200',
+  ];
 
   return (
     <div>
       <header className="app-header">
         <h1>SniffHound</h1>
       </header>
-        <h2 className='chart-heading'> Anomaly Dashboard</h2>
+      <h2 className="hart-heading">Anomaly Dashboard</h2>
       <div className="chart-container">
+        {/* **Protocol Type Distribution Chart** */}
         <div className="chart-card">
           <h2>Protocol Type Distribution</h2>
           <PieChart width={400} height={400}>
@@ -105,6 +150,7 @@ const Dashboard = () => {
           </PieChart>
         </div>
 
+        {/* **Service Distribution Chart** */}
         <div className="chart-card">
           <h2>Service Distribution</h2>
           <PieChart width={400} height={400}>
@@ -119,6 +165,54 @@ const Dashboard = () => {
               {serviceCounts.map((entry, index) => (
                 <Cell
                   key={`service-cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend verticalAlign="bottom" height={36} />
+          </PieChart>
+        </div>
+
+        {/* **Anomaly Type Distribution Chart** */}
+        <div className="chart-card">
+          <h2>Anomaly Type Distribution</h2>
+          <PieChart width={400} height={400}>
+            <Pie
+              data={anomalyTypeCounts}
+              cx="50%"
+              cy="50%"
+              outerRadius={120}
+              dataKey="value"
+              label
+            >
+              {anomalyTypeCounts.map((entry, index) => (
+                <Cell
+                  key={`anomaly-type-cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend verticalAlign="bottom" height={36} />
+          </PieChart>
+        </div>
+
+        {/* **Attack Vector Distribution Chart** */}
+        <div className="chart-card">
+          <h2>Attack Vector Distribution</h2>
+          <PieChart width={400} height={400}>
+            <Pie
+              data={attackVectorCounts}
+              cx="50%"
+              cy="50%"
+              outerRadius={120}
+              dataKey="value"
+              label
+            >
+              {attackVectorCounts.map((entry, index) => (
+                <Cell
+                  key={`attack-vector-cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
                 />
               ))}
