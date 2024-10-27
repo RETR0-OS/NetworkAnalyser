@@ -41,6 +41,7 @@ try:
                 stats['srv_count'] += 1 if packet[TCP].dport == stats.get('last_service', None) else 0
                 stats['last_service'] = packet[TCP].dport
 
+
     def save_to_csv(filename):
         with open(filename, 'w', newline='') as csvfile:
             fieldnames = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes', 'dst_bytes',
@@ -51,13 +52,18 @@ try:
                           'dst_host_same_srv_rate', 'dst_host_diff_srv_rate', 'dst_host_same_src_port_rate',
                           'dst_host_srv_diff_host_rate', 'dst_host_serror_rate', 'dst_host_srv_serror_rate',
                           'dst_host_rerror_rate', 'dst_host_srv_rerror_rate', 'attack_category_encoded']
-
+            new_data = pd.DataFrame(columns=fieldnames)
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
 
+            rows = []
             for ip, stats in packet_stats.items():
                 row = {field: stats.get(field, 0) for field in fieldnames}
+                rows.append(row)
                 writer.writerow(row)
+
+            new_data = pd.concat([new_data, pd.DataFrame(rows)], ignore_index=True)
+            return new_data
 
 
     def anolmaly_mapper(label):
@@ -85,6 +91,16 @@ try:
         return attack_mapping[label]
 
     def attack_category_mapper(label):
+        if label == 0:
+            label = 0
+        elif label in [1, 2, 3, 4, 5, 6, 7, 8]:
+            label = 1
+        elif label in [9, 10, 11, 12, 13, 15, 16]:
+            label = 2
+        elif label in [17, 18]:
+            label = 3
+        elif label == 14:
+            label = 4
         attack_mapping = {
             0: 'normal',
             1: 'DoS',
@@ -95,13 +111,12 @@ try:
         return attack_mapping[label]
 
 
-    def generate_log(csv_file):
+    def generate_log(capture_data):
         with open("sniffHound.dat", "rb") as f:
             model, scaler = pickle.load(f)
 
         # Read the CSV file into a DataFrame
-        data = pd.DataFrame(pd.read_csv(csv_file))
-
+        data = capture_data
         # Ensure the correct number of features
         features = data.astype(float)
 
@@ -116,7 +131,7 @@ try:
             if np.argmax(prediction) != 0:
                 # Anomaly detected
                 anomalies.append(
-                    f"Anomaly detected in request {i}: {data.iloc[i].tolist()}\nAnomaly type: {np.argmax(prediction)}\n\n")
+                    f"Anomaly detected in request {i}: {data.iloc[i].tolist()}\nAnomaly type: {anolmaly_mapper(np.argmax(prediction))}\nPossible attack vector : {attack_category_mapper(np.argmax(prediction))}\n\n")
 
         # Ensure Logs directory exists
         os.makedirs("Logs", exist_ok=True)
@@ -137,9 +152,9 @@ try:
         print("Starting packet capture... Press Ctrl+C to stop.")
         sniff(prn=packet_callback, store=0, timeout=60)  # Capture for 60 seconds using default interface
         # Save captured data to CSV
-        save_to_csv('captured_network_data.csv')
+        captured_data = save_to_csv('captured_network_data.csv')
         print("Data saved to captured_network_data.csv")
-        log_thread = threading.Thread(target=generate_log, args=('captured_network_data.csv',))
+        log_thread = threading.Thread(target=generate_log, args=(captured_data,))
         log_thread.start()
         log_thread.join()
 except KeyboardInterrupt:
