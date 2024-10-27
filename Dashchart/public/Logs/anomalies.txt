@@ -1,28 +1,42 @@
 All ok
 All ok
-All ok
-All ok
-All ok
-Anomaly detected in request 1: [np.float64(378.73077917099), 2, 6, 10, 155109, 140589, 0, 0, 0, 0, 0, 0, 0, 726, 547, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly detected in request 0: [np.float64(186.74689292907715), 2, 6, 10, 416763, 391263, 0, 0, 0, 0, 0, 0, 0, 1275, 554, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Anomaly type: udpstorm
 Possible attack vector : DoS
 
-Anomaly detected in request 1: [np.float64(437.6359281539917), 2, 6, 10, 157251, 141811, 0, 0, 0, 0, 0, 0, 0, 772, 591, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly detected in request 0: [np.float64(248.07066106796265), 2, 6, 10, 465621, 436461, 0, 0, 0, 0, 0, 0, 0, 1458, 637, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Anomaly type: udpstorm
 Possible attack vector : DoS
 
-All ok
-All ok
-All ok
-All ok
-All ok
-All ok
-All ok
-Anomaly detected in request 1: [np.float64(484.83814907073975), 2, 6, 10, 188208, 173588, 0, 0, 0, 0, 0, 0, 0, 731, 562, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly detected in request 0: [np.float64(308.6108920574188), 2, 6, 10, 514325, 482145, 0, 0, 0, 0, 0, 0, 0, 1609, 729, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Anomaly type: udpstorm
 Possible attack vector : DoS
 
-Anomaly detected in request 1: [np.float64(544.5192821025848), 2, 6, 10, 191215, 175715, 0, 0, 0, 0, 0, 0, 0, 775, 605, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly detected in request 0: [np.float64(369.1785569190979), 2, 6, 10, 557061, 522401, 0, 0, 0, 0, 0, 0, 0, 1733, 782, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly type: udpstorm
+Possible attack vector : DoS
+
+Anomaly detected in request 0: [np.float64(429.1369960308075), 2, 6, 10, 627610, 589130, 0, 0, 0, 0, 0, 0, 0, 1924, 908, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly type: udpstorm
+Possible attack vector : DoS
+
+Anomaly detected in request 0: [np.float64(490.23746514320374), 2, 6, 10, 681471, 639031, 0, 0, 0, 0, 0, 0, 0, 2122, 1004, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly type: udpstorm
+Possible attack vector : DoS
+
+Anomaly detected in request 0: [np.float64(550.5341579914093), 2, 6, 10, 778812, 717032, 0, 0, 0, 0, 0, 0, 0, 3089, 1883, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly type: udpstorm
+Possible attack vector : DoS
+
+Anomaly detected in request 70: [np.float64(29.99113702774048), 2, 6, 10, 1783013, 1755933, 0, 0, 0, 0, 0, 0, 0, 1354, 1353, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly type: udpstorm
+Possible attack vector : DoS
+
+Anomaly detected in request 0: [np.float64(610.6785740852356), 2, 6, 10, 1003121, 892021, 0, 0, 0, 0, 0, 0, 0, 5555, 4243, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Anomaly type: udpstorm
+Possible attack vector : DoS
+
+Anomaly detected in request 70: [np.float64(45.515323877334595), 2, 6, 10, 21316393, 20997213, 0, 0, 0, 0, 0, 0, 0, 15959, 15957, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Anomaly type: udpstorm
 Possible attack vector : DoS
 
