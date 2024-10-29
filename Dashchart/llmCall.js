@@ -1,6 +1,6 @@
 import { HfInference } from "@huggingface/inference";
 
-const client = new HfInference("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");
+const client = new HfInference("<Hugging face token>");
 
 async function processJSONWithLlama(jsonData, prompt) {
   let out = "";
