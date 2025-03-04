@@ -76,7 +76,7 @@ SniffHound was built using Python and several key libraries:
 We trained a machine learning model to detect network anomalies using a dataset of network traffic. The model and scaler are saved in sniffHound.dat and loaded during runtime to analyze captured network data. Storing the model and scaler as pipelines in a dat file saves  valuable space and computation time. The tool logs detected anomalies for further analysis and can be integrated with other network security tools to enhance protection.
 
 ## Challenges We Ran Into
-- Our orignal project was (an track) was not this. We had spent 26th October, 2024 in developing another project that was eventually recalled over IP issues.
+- Our orignal project was (and track) not this. We had spent 26th October, 2024 in developing another project that was eventually recalled over IP issues.
 - We had a serious shortage of time and motivation after our orignal project was scrapped.
 - The first challenge was to clean the dataset and identify key parameters relevant to anomaly detection.
 - Next, we had to figure out a way to encode the string parameters into numerics for easy processing. 
